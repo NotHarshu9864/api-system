@@ -1,0 +1,359 @@
+{
+  "batches": [
+    {
+      "id": "9900",
+      "name": "Commerce 12th",
+      "subjects": [
+        {
+          "id": "business",
+          "name": "Business Studies",
+          "chapters": [
+            {
+              "id": "business_ch1",
+              "title": "Nature & Significance of Management",
+              "videos": [
+                {
+                  "id": "v1",
+                  "title": "Nature & Significance of Management | 1",
+                  "link": "https://player-harsh.netlify.app/player?link=https://youtu.be/vuOi8qmWjfo"
+                },
+                {
+                  "id": "v2",
+                  "title": "Nature & Significance of Management | 2",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4352789/174480899776288661500/174480899776288661500_8661500.m3u8"
+                },
+                {
+                  "id": "v3",
+                  "title": "Nature & Significance of Management | 3",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4353835/174489517533298661500/174489517533298661500_8661500.m3u8"
+                },
+                {
+                  "id": "v4",
+                  "title": "Nature & Significance of Management | 4",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4356694/174524074953508661500/174524074953508661500_8661500.m3u8"
+                },
+                {
+                  "id": "v5",
+                  "title": "Nature & Significance of Management | 5",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4357732/174532678326708661500/174532678326708661500_8661500.m3u8"
+                },
+                {
+                  "id": "v6",
+                  "title": "Nature & Significance of Management | 6",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4359029/174542368078498661500/174542368078498661500_8661500.m3u8"
+                }
+              ]
+            },
+            {
+              "id": "business_ch2",
+              "title": "Doubt Solving Session",
+              "videos": [
+                {
+                  "id": "v1",
+                  "title": "Doubt Solving Session | 1",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4363255/174584547589288661500/174584547589288661500_8661500.m3u8"
+                }
+              ]
+            },
+            {
+              "id": "business_ch3",
+              "title": "Principles of Management",
+              "videos": [
+                {
+                  "id": "v1",
+                  "title": "Principles of Management | 1",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4364568/174593078847348661500/174593078847348661500_8661500.m3u8"
+                },
+                {
+                  "id": "v2",
+                  "title": "Principles of Management | 2",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4366042/174602879191418661500/174602879191418661500_8661500.m3u8"
+                },
+                {
+                  "id": "v3",
+                  "title": "Principles of Management | 3",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4372215/174645067488898661500/174645067488898661500_8661500.m3u8"
+                },
+                {
+                  "id": "v4",
+                  "title": "Principles of Management | 4",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4375006/174663399647108661500/174663399647108661500_8661500.m3u8"
+                },
+                {
+                  "id": "v5",
+                  "title": "Principles of Management | 5",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4379031/174705490630488661500/174705490630488661500_8661500.m3u8"
+                },
+                {
+                  "id": "v6",
+                  "title": "Principles of Management | 6",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4380485/174713943447148661500/174713943447148661500_8661500.m3u8"
+                },
+                {
+                  "id": "v7",
+                  "title": "Principles of Management | 7",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4381989/174723801376408661500/174723801376408661500_8661500.m3u8"
+                },
+                {
+                  "id": "v8",
+                  "title": "Principles of Management | 8",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4385715/174765965560238661500/174765965560238661500_8661500.m3u8"
+                },
+                {
+                  "id": "v9",
+                  "title": "Principles of Management | 9",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4386973/174774719252628661500/174774719252628661500_8661500.m3u8"
+                }
+              ]
+            },
+            {
+              "id": "business_ch4",
+              "title": "Doubt Solving Session",
+              "videos": [
+                {
+                  "id": "v1",
+                  "title": "Doubt Solving Session | 1",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4388155/174784202747678661500/174784202747678661500_8661500.m3u8"
+                }
+              ]
+            },
+            {
+              "id": "business_ch5",
+              "title": "Business Environment",
+              "videos": [
+                {
+                  "id": "v1",
+                  "title": "Business Environment | 1",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4392737/174826447342568661500/174826447342568661500_8661500.m3u8"
+                },
+                {
+                  "id": "v2",
+                  "title": "Business Environment | 2",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4393937/174835057394838661500/174835057394838661500_8661500.m3u8"
+                },
+                {
+                  "id": "v3",
+                  "title": "Business Environment | 3",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4395113/174844744085528661500/174844744085528661500_8661500.m3u8"
+                },
+                {
+                  "id": "v4",
+                  "title": "Business Environment | 4",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4405158/174947391184318661500/174947391184318661500_8661500.m3u8"
+                },
+                {
+                  "id": "v5",
+                  "title": "Business Environment | 5",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4406199/174955984913578661500/174955984913578661500_8661500.m3u8"
+                },
+                {
+                  "id": "v6",
+                  "title": "Business Environment | 6",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4407487/174965636350218661500/174965636350218661500_8661500.m3u8"
+                }
+              ]
+            },
+            {
+              "id": "business_ch6",
+              "title": "Planning",
+              "videos": [
+                {
+                  "id": "v1",
+                  "title": "Planning | 1",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4411245/175007863764312266688/175007863764312266688_2266688.m3u8"
+                },
+                {
+                  "id": "v2",
+                  "title": "Planning | 2",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4412498/175016475829042266688/175016475829042266688_2266688.m3u8"
+                },
+                {
+                  "id": "v3",
+                  "title": "Planning | 3",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4413859/175026177494082266688/175026177494082266688_2266688.m3u8"
+                },
+                {
+                  "id": "v4",
+                  "title": "Planning | 4",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4417627/175068317437312266688/175068317437312266688_2266688.m3u8"
+                },
+                {
+                  "id": "v5",
+                  "title": "Planning | 5",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4419839/175086787468232266688/175086787468232266688_2266688.m3u8"
+                }
+              ]
+            },
+            {
+              "id": "business_ch7",
+              "title": "Class 12 Business Studies Backlog Marathon Series | Complete Chapter Revision | CBSE Session 2025-26",
+              "videos": [
+                {
+                  "id": "v1",
+                  "title": "Class 12 Business Studies Backlog Marathon Series | Complete Chapter Revision | CBSE Session 2025-26 | 1",
+                  "link": "https://player-harsh.netlify.app/player?link=https://youtu.be/-vqAZKEEzUM"
+                }
+              ]
+            },
+            {
+              "id": "business_ch8",
+              "title": "Gullak Doubt Class (Planning)",
+              "videos": [
+                {
+                  "id": "v1",
+                  "title": "Gullak Doubt Class (Planning) | 1",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4475880/175189249499622266688/175189249499622266688_2266688.m3u8"
+                }
+              ]
+            },
+            {
+              "id": "business_ch9",
+              "title": "Organising",
+              "videos": [
+                {
+                  "id": "v1",
+                  "title": "Organising | 1",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4480239/175224935994372266688/175224935994372266688_2266688.m3u8"
+                },
+                {
+                  "id": "v2",
+                  "title": "Organising | 2",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4480835/175233525759262266688/175233525759262266688_2266688.m3u8"
+                },
+                {
+                  "id": "v3",
+                  "title": "Organising | 3",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4481909/175249786027412266688/175249786027412266688_2266688.m3u8"
+                },
+                {
+                  "id": "v4",
+                  "title": "Organising | 4",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4482862/175258329437372266688/175258329437372266688_2266688.m3u8"
+                },
+                {
+                  "id": "v5",
+                  "title": "Organising | 5",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4484122/175268103286782266688/175268103286782266688_2266688.m3u8"
+                }
+              ]
+            },
+            {
+              "id": "business_ch10",
+              "title": "Organising Doubt Solving Session",
+              "videos": [
+                {
+                  "id": "v1",
+                  "title": "Organising Doubt Solving Session | 1",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4487922/175310134983592266688/175310134983592266688_2266688.m3u8"
+                }
+              ]
+            },
+            {
+              "id": "business_ch11",
+              "title": "Staffing",
+              "videos": [
+                {
+                  "id": "v1",
+                  "title": "Staffing | 1",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4489707/175318917989722266688/175318917989722266688_2266688.m3u8"
+                },
+                {
+                  "id": "v2",
+                  "title": "Staffing | 2",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4491679/175328582616752266688/175328582616752266688_2266688.m3u8"
+                },
+                {
+                  "id": "v3",
+                  "title": "Staffing | 3",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4501578/175370750749212266688/175370750749212266688_2266688.m3u8"
+                },
+                {
+                  "id": "v4",
+                  "title": "Staffing | 4",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4503200/175379416480002266688/175379416480002266688_2266688.m3u8"
+                },
+                {
+                  "id": "v5",
+                  "title": "Staffing | 5",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4504574/175389124726502266688/175389124726502266688_2266688.m3u8"
+                }
+              ]
+            },
+            {
+              "id": "business_ch12",
+              "title": "Staffing Doubt Solving Session",
+              "videos": [
+                {
+                  "id": "v1",
+                  "title": "Staffing Doubt Solving Session | 1",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4512209/175431175732452266688/175431175732452266688_2266688.m3u8"
+                }
+              ]
+            },
+            {
+              "id": "business_ch13",
+              "title": "Directing",
+              "videos": [
+                {
+                  "id": "v1",
+                  "title": "Directing | 1",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4513168/175439868123432266688/175439868123432266688_2266688.m3u8"
+                },
+                {
+                  "id": "v2",
+                  "title": "Directing | 2",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4514446/175449684256642266688/175449684256642266688_2266688.m3u8"
+                },
+                {
+                  "id": "v3",
+                  "title": "Directing | 3",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4517300/175491799493872266688/175491799493872266688_2266688.m3u8"
+                },
+                {
+                  "id": "v4",
+                  "title": "Directing | 4",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4518516/175500287877552266688/175500287877552266688_2266688.m3u8"
+                },
+                {
+                  "id": "v5",
+                  "title": "Directing | 5",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4520164/175509981638342266688/175509981638342266688_2266688.m3u8"
+                },
+                {
+                  "id": "v6",
+                  "title": "Directing | 6",
+                  "link": "https://player-harsh.netlify.app/player?link=http://nexttoppers.com/4523179_0_3277692827803834/videocrypt.mpd"
+                },
+                {
+                  "id": "v7",
+                  "title": "Directing | 7",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4524371/175560860796532266688/175560860796532266688_2266688.m3u8"
+                }
+              ]
+            },
+            {
+              "id": "business_ch14",
+              "title": "Doubt Solving Directing",
+              "videos": [
+                {
+                  "id": "v1",
+                  "title": "Doubt Solving Directing | 1",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4525699/175570419831372266688/175570419831372266688_2266688.m3u8"
+                }
+              ]
+            },
+            {
+              "id": "business_ch15",
+              "title": "Controlling",
+              "videos": [
+                {
+                  "id": "v1",
+                  "title": "Controlling | 1",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4529959/175612709431992266688/175612709431992266688_2266688.m3u8"
+                },
+                {
+                  "id": "v2",
+                  "title": "Controlling | 2",
+                  "link": "https://player-harsh.netlify.app/player?link=https://d274dp7v20n4nf.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4531196/175621320916452266688/175621320916452266688_2266688.m3u8"
+                }
+            
