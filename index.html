@@ -3,130 +3,99 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>API SERVER - HARSH</title>
+<title>System Status</title>
 
 <style>
 :root {
   --bg: #0b0f1a;
-  --card: #141a2e;
-  --green: #2cff9a;
-  --red: #ff4d4d;
-  --text: #e8ebff;
-  --muted: #8a8fae;
+  --card: #12182b;
+  --green: #22ff99;
+  --text: #eef1ff;
+  --muted: #8c91b6;
 }
 
 * {
   box-sizing: border-box;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter", system-ui, sans-serif;
 }
 
 body {
   margin: 0;
-  background: linear-gradient(135deg, #070b18, #0b0f1a);
-  color: var(--text);
+  background: radial-gradient(circle at top, #10163a, var(--bg));
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.container {
-  width: 90%;
-  max-width: 420px;
-}
-
-.card {
-  background: var(--card);
-  border-radius: 18px;
-  padding: 24px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-  animation: fadeIn 0.8s ease;
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 18px;
-  font-size: 22px;
-}
-
-.input-box {
-  display: flex;
-  gap: 10px;
-}
-
-input {
-  flex: 1;
-  padding: 12px;
-  border-radius: 12px;
-  border: none;
-  outline: none;
-  background: #0c1228;
   color: var(--text);
 }
 
-button {
-  padding: 12px 16px;
-  border: none;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #6a7bff, #9c5cff);
-  color: white;
-  cursor: pointer;
-  transition: transform 0.2s, opacity 0.2s;
-}
-
-button:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
-}
-
-.status-box {
-  margin-top: 22px;
+.card {
+  width: 90%;
+  max-width: 420px;
+  background: var(--card);
+  padding: 28px;
+  border-radius: 20px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5);
   text-align: center;
+  animation: fadeUp 0.8s ease;
 }
 
-.loader {
-  width: 42px;
-  height: 42px;
-  border: 4px solid rgba(255,255,255,0.15);
-  border-top: 4px solid #6a7bff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 12px auto;
-  display: none;
+h1 {
+  margin: 0;
+  font-size: 22px;
+  margin-bottom: 10px;
 }
 
 .status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   font-size: 18px;
   font-weight: 600;
-  margin-top: 10px;
-}
-
-.online {
+  margin: 20px 0 10px;
   color: var(--green);
 }
 
-.offline {
-  color: var(--red);
+.dot {
+  width: 12px;
+  height: 12px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--green);
+  animation: pulse 1.5s infinite;
 }
 
-.response {
-  margin-top: 6px;
-  font-size: 14px;
+.message {
   color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 20px;
 }
 
-footer {
-  text-align: center;
-  margin-top: 16px;
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  margin: 18px 0;
+}
+
+.info {
   font-size: 13px;
   color: var(--muted);
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+footer {
+  margin-top: 18px;
+  font-size: 13px;
+  color: var(--muted);
 }
 
-@keyframes fadeIn {
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeUp {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -141,59 +110,29 @@ footer {
 
 <body>
 
-<div class="container">
-  <div class="card">
-    <h1>Website Running Status</h1>
+<div class="card">
+  <h1>Website Status</h1>
 
-    <div class="input-box">
-      <input type="text" id="url" placeholder="https://example.com">
-      <button onclick="checkStatus()">Check</button>
-    </div>
-
-    <div class="status-box">
-      <div class="loader" id="loader"></div>
-      <div class="status" id="statusText"></div>
-      <div class="response" id="responseTime"></div>
-    </div>
-
-    <footer>© Harsh | 2025</footer>
+  <div class="status">
+    <span class="dot"></span>
+    RUNNING
   </div>
+
+  <div class="message">
+    All systems are operational.<br>
+    No incidents reported.
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="info">
+    Last updated: Live
+  </div>
+
+  <footer>
+    © Harsh | 2025
+  </footer>
 </div>
-
-<script>
-async function checkStatus() {
-  const url = document.getElementById("url").value.trim();
-  const statusText = document.getElementById("statusText");
-  const responseTime = document.getElementById("responseTime");
-  const loader = document.getElementById("loader");
-
-  if (!url) {
-    alert("Enter a website URL");
-    return;
-  }
-
-  statusText.textContent = "";
-  responseTime.textContent = "";
-  loader.style.display = "block";
-
-  const startTime = performance.now();
-
-  try {
-    await fetch(url, { mode: "no-cors" });
-    const endTime = performance.now();
-
-    loader.style.display = "none";
-    statusText.textContent = "● Website is RUNNING";
-    statusText.className = "status online";
-    responseTime.textContent = `Response Time: ${Math.round(endTime - startTime)} ms`;
-  } catch (error) {
-    loader.style.display = "none";
-    statusText.textContent = "● Website is DOWN";
-    statusText.className = "status offline";
-    responseTime.textContent = "No response from server";
-  }
-}
-</script>
 
 </body>
 </html>
