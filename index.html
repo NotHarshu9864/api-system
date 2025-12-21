@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API SERVER - HARSH</title>
+
+<style>
+:root {
+  --bg: #0b0f1a;
+  --card: #141a2e;
+  --green: #2cff9a;
+  --red: #ff4d4d;
+  --text: #e8ebff;
+  --muted: #8a8fae;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #070b18, #0b0f1a);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 90%;
+  max-width: 420px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  animation: fadeIn 0.8s ease;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 18px;
+  font-size: 22px;
+}
+
+.input-box {
+  display: flex;
+  gap: 10px;
+}
+
+input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  background: #0c1228;
+  color: var(--text);
+}
+
+button {
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6a7bff, #9c5cff);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.status-box {
+  margin-top: 22px;
+  text-align: center;
+}
+
+.loader {
+  width: 42px;
+  height: 42px;
+  border: 4px solid rgba(255,255,255,0.15);
+  border-top: 4px solid #6a7bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 12px auto;
+  display: none;
+}
+
+.status {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.online {
+  color: var(--green);
+}
+
+.offline {
+  color: var(--red);
+}
+
+.response {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+footer {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="card">
+    <h1>Website Running Status</h1>
+
+    <div class="input-box">
+      <input type="text" id="url" placeholder="https://example.com">
+      <button onclick="checkStatus()">Check</button>
+    </div>
+
+    <div class="status-box">
+      <div class="loader" id="loader"></div>
+      <div class="status" id="statusText"></div>
+      <div class="response" id="responseTime"></div>
+    </div>
+
+    <footer>© Harsh | 2025</footer>
+  </div>
+</div>
+
+<script>
+async function checkStatus() {
+  const url = document.getElementById("url").value.trim();
+  const statusText = document.getElementById("statusText");
+  const responseTime = document.getElementById("responseTime");
+  const loader = document.getElementById("loader");
+
+  if (!url) {
+    alert("Enter a website URL");
+    return;
+  }
+
+  statusText.textContent = "";
+  responseTime.textContent = "";
+  loader.style.display = "block";
+
+  const startTime = performance.now();
+
+  try {
+    await fetch(url, { mode: "no-cors" });
+    const endTime = performance.now();
+
+    loader.style.display = "none";
+    statusText.textContent = "● Website is RUNNING";
+    statusText.className = "status online";
+    responseTime.textContent = `Response Time: ${Math.round(endTime - startTime)} ms`;
+  } catch (error) {
+    loader.style.display = "none";
+    statusText.textContent = "● Website is DOWN";
+    statusText.className = "status offline";
+    responseTime.textContent = "No response from server";
+  }
+}
+</script>
+
+</body>
+</html>
