@@ -17,14 +17,23 @@ body{
     justify-content:center;
     align-items:center;
 }
-.container{max-width:900px;width:100%;padding:16px}
+.container{
+    width:100%;
+    max-width:820px;
+    padding:16px;
+}
 .card{
     background:#020617;
-    border-radius:20px;
-    padding:20px;
-    box-shadow:0 0 45px rgba(34,211,238,.25);
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 0 40px rgba(34,211,238,.25);
 }
-h1{text-align:center;color:#22d3ee;margin-bottom:14px}
+h1{
+    text-align:center;
+    color:#22d3ee;
+    font-size:1.3rem;
+    margin-bottom:14px;
+}
 input,textarea{
     width:100%;
     background:#020617;
@@ -32,47 +41,73 @@ input,textarea{
     border-radius:12px;
     padding:12px;
     color:#e5e7eb;
-    margin-bottom:10px;
+    font-size:14px;
 }
-textarea{min-height:160px;resize:vertical}
+textarea{
+    min-height:150px;
+    resize:vertical;
+}
+textarea::placeholder{color:#64748b}
+input[type=file]{
+    margin-top:10px;
+    width:100%;
+    color:#94a3b8;
+}
 button{
     width:100%;
+    margin-top:12px;
     padding:12px;
     border-radius:12px;
     border:none;
+    font-size:15px;
     font-weight:600;
     cursor:pointer;
     background:linear-gradient(135deg,#22d3ee,#38bdf8);
     color:#020617;
 }
-.actions{display:flex;gap:10px;flex-wrap:wrap}
-.actions button{flex:1}
-.progress{
-    margin-top:10px;
-    height:6px;
-    background:#1e293b;
-    border-radius:999px;
-    overflow:hidden;
-    display:none;
+.actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
 }
-.progress div{
-    height:100%;
-    width:0%;
-    background:#22d3ee;
-    transition:width .2s;
+.actions button{flex:1}
+.output{
+    margin-top:18px;
+    border:1px solid #1e293b;
+    border-radius:14px;
+    padding:12px;
+}
+.output-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:8px;
+}
+.label{
+    color:#38bdf8;
+    font-size:13px;
+    font-weight:600;
+}
+.small-btn{
+    background:none;
+    border:1px solid #22d3ee;
+    color:#22d3ee;
+    padding:6px 12px;
+    font-size:12px;
+    border-radius:999px;
+    cursor:pointer;
 }
 pre{
-    margin-top:14px;
-    background:#020617;
-    border:1px solid #1e293b;
-    border-radius:12px;
-    padding:12px;
-    font-size:13px;
     white-space:pre-wrap;
+    word-break:break-all;
+    font-size:13px;
+    margin:0;
 }
 footer{
-    margin-top:12px;
     text-align:center;
+    margin-top:10px;
     font-size:12px;
     color:#64748b;
 }
@@ -80,41 +115,51 @@ footer{
 </head>
 
 <body>
+
 <div class="container">
 <div class="card">
 <h1>M3U8 & Notes → JSON Generator</h1>
 
 <input id="subject" placeholder="Enter Subject Name">
-<textarea id="input" placeholder="Paste text or upload file..."></textarea>
+
+<textarea id="input" placeholder="Paste content or upload file..."></textarea>
 <input type="file" accept=".txt" onchange="loadFile(this)">
 
 <div class="actions">
     <button onclick="generateJSON()">Generate JSON</button>
 </div>
 
-<div class="progress"><div id="bar"></div></div>
-
-<pre id="output">—</pre>
+<div class="output">
+    <div class="output-header">
+        <span class="label">Output</span>
+        <div>
+            <button class="small-btn" onclick="copyOutput()">Copy</button>
+            <button class="small-btn" onclick="downloadFile()">Download</button>
+        </div>
+    </div>
+    <pre id="output">—</pre>
+</div>
 
 <footer>© Harsh | 2025</footer>
 </div>
 </div>
 
 <script>
-/* 🔐 Safe multi-decode */
+/* 🔐 Strong multi-decode */
 function safeDecode(str){
     let prev, curr=str;
     do{
-        prev=curr;
-        try{curr=decodeURIComponent(prev)}catch{break}
-    }while(prev!==curr);
+        prev = curr;
+        try{ curr = decodeURIComponent(prev); }
+        catch{ break; }
+    }while(prev !== curr);
     return curr;
 }
 
-/* 🧹 Remove ANY player prefix */
+/* 🧹 Remove any player prefix */
 function cleanPlayer(url){
-    const d = safeDecode(url.trim());
-    const m = d.match(/https?:\/\/.*\.m3u8/);
+    const d = safeDecode(url);
+    const m = d.match(/https?:\/\/[^?\s]+/);
     return m ? m[0] : "";
 }
 
@@ -128,7 +173,7 @@ function extractNotes(url){
 /* 📄 Lines */
 function getLines(){
     return document.getElementById("input").value
-        .split("\n")
+        .split(/\r?\n/)
         .map(l=>l.trim())
         .filter(Boolean);
 }
@@ -136,57 +181,87 @@ function getLines(){
 /* 🚀 JSON Generator */
 function generateJSON(){
     const lines = getLines();
-    const bar = document.getElementById("bar");
-    document.querySelector(".progress").style.display="block";
 
-    let chapters=[], current=null, pendingLecture=null;
-    let ch=1, index=0;
+    let chapters = [];
+    let current = null;
+    let pendingLecture = null;
+    let chIndex = 1;
 
-    lines.forEach((line,i)=>{
-        bar.style.width = ((i+1)/lines.length*100)+"%";
+    lines.forEach(line=>{
+        const lower = line.toLowerCase();
 
-        if(!line.startsWith("http") && !line.toLowerCase().startsWith("lecture")){
-            current={id:"ch"+ch++,title:line,videos:[]};
+        /* Chapter */
+        if(!lower.startsWith("lecture") && !lower.includes("http")){
+            current = {
+                id: "ch" + chIndex++,
+                title: line,
+                videos: []
+            };
             chapters.push(current);
             return;
         }
 
-        if(line.toLowerCase().startsWith("lecture")){
-            pendingLecture={title:line};
+        /* Lecture title */
+        if(lower.startsWith("lecture")){
+            pendingLecture = line;
             return;
         }
 
-        if(line.startsWith("http") && pendingLecture && current){
+        /* URL */
+        if(current && pendingLecture && line.includes("http")){
             const play = cleanPlayer(line);
             if(!play) return;
 
             current.videos.push({
-                id:"lec"+(current.videos.length+1),
-                title:pendingLecture.title,
-                play,
-                notes:extractNotes(line)
+                id: "lec" + (current.videos.length + 1),
+                title: pendingLecture,
+                play: play,
+                notes: extractNotes(line)
             });
-            pendingLecture=null;
+
+            pendingLecture = null;
         }
     });
 
-    const json={
-        subject:document.getElementById("subject").value || "",
+    const json = {
+        subject: document.getElementById("subject").value || "",
         chapters
     };
 
     document.getElementById("output").textContent =
-        JSON.stringify(json,null,2);
+        JSON.stringify(json, null, 2);
 }
 
-/* 📂 File Loader */
+/* 📋 Copy */
+function copyOutput(){
+    navigator.clipboard.writeText(
+        document.getElementById("output").innerText
+    );
+}
+
+/* ⬇ Download */
+function downloadFile(){
+    const blob = new Blob(
+        [document.getElementById("output").innerText],
+        {type:"application/json"}
+    );
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "lectures.json";
+    a.click();
+}
+
+/* 📂 File loader */
 function loadFile(input){
-    const file=input.files[0];
+    const file = input.files[0];
     if(!file) return;
-    const r=new FileReader();
-    r.onload=e=>document.getElementById("input").value=e.target.result;
-    r.readAsText(file);
+    const reader = new FileReader();
+    reader.onload = e=>{
+        document.getElementById("input").value = e.target.result;
+    };
+    reader.readAsText(file);
 }
 </script>
+
 </body>
 </html>
