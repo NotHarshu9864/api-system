@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>M3U8 → JSON Generator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    min-height:100vh;
+    background:#020617;
+    font-family:system-ui,sans-serif;
+    color:#e5e7eb;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.container{max-width:900px;width:100%;padding:16px}
+.card{
+    background:#020617;
+    border-radius:20px;
+    padding:20px;
+    box-shadow:0 0 45px rgba(34,211,238,.25);
+}
+h1{text-align:center;color:#22d3ee;margin-bottom:14px}
+input,textarea{
+    width:100%;
+    background:#020617;
+    border:1px solid #1e293b;
+    border-radius:12px;
+    padding:12px;
+    color:#e5e7eb;
+    margin-bottom:10px;
+}
+textarea{min-height:160px;resize:vertical}
+button{
+    width:100%;
+    padding:12px;
+    border-radius:12px;
+    border:none;
+    font-weight:600;
+    cursor:pointer;
+    background:linear-gradient(135deg,#22d3ee,#38bdf8);
+    color:#020617;
+}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.actions button{flex:1}
+.progress{
+    margin-top:10px;
+    height:6px;
+    background:#1e293b;
+    border-radius:999px;
+    overflow:hidden;
+    display:none;
+}
+.progress div{
+    height:100%;
+    width:0%;
+    background:#22d3ee;
+    transition:width .2s;
+}
+pre{
+    margin-top:14px;
+    background:#020617;
+    border:1px solid #1e293b;
+    border-radius:12px;
+    padding:12px;
+    font-size:13px;
+    white-space:pre-wrap;
+}
+footer{
+    margin-top:12px;
+    text-align:center;
+    font-size:12px;
+    color:#64748b;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+<div class="card">
+<h1>M3U8 & Notes → JSON Generator</h1>
+
+<input id="subject" placeholder="Enter Subject Name">
+<textarea id="input" placeholder="Paste text or upload file..."></textarea>
+<input type="file" accept=".txt" onchange="loadFile(this)">
+
+<div class="actions">
+    <button onclick="generateJSON()">Generate JSON</button>
+</div>
+
+<div class="progress"><div id="bar"></div></div>
+
+<pre id="output">—</pre>
+
+<footer>© Harsh | 2025</footer>
+</div>
+</div>
+
+<script>
+/* 🔐 Safe multi-decode */
+function safeDecode(str){
+    let prev, curr=str;
+    do{
+        prev=curr;
+        try{curr=decodeURIComponent(prev)}catch{break}
+    }while(prev!==curr);
+    return curr;
+}
+
+/* 🧹 Remove ANY player prefix */
+function cleanPlayer(url){
+    const d = safeDecode(url.trim());
+    const m = d.match(/https?:\/\/.*\.m3u8/);
+    return m ? m[0] : "";
+}
+
+/* 📝 Extract notes */
+function extractNotes(url){
+    const d = safeDecode(url);
+    const m = d.match(/notesLink=([^&]+)/);
+    return m ? safeDecode(m[1]) : "";
+}
+
+/* 📄 Lines */
+function getLines(){
+    return document.getElementById("input").value
+        .split("\n")
+        .map(l=>l.trim())
+        .filter(Boolean);
+}
+
+/* 🚀 JSON Generator */
+function generateJSON(){
+    const lines = getLines();
+    const bar = document.getElementById("bar");
+    document.querySelector(".progress").style.display="block";
+
+    let chapters=[], current=null, pendingLecture=null;
+    let ch=1, index=0;
+
+    lines.forEach((line,i)=>{
+        bar.style.width = ((i+1)/lines.length*100)+"%";
+
+        if(!line.startsWith("http") && !line.toLowerCase().startsWith("lecture")){
+            current={id:"ch"+ch++,title:line,videos:[]};
+            chapters.push(current);
+            return;
+        }
+
+        if(line.toLowerCase().startsWith("lecture")){
+            pendingLecture={title:line};
+            return;
+        }
+
+        if(line.startsWith("http") && pendingLecture && current){
+            const play = cleanPlayer(line);
+            if(!play) return;
+
+            current.videos.push({
+                id:"lec"+(current.videos.length+1),
+                title:pendingLecture.title,
+                play,
+                notes:extractNotes(line)
+            });
+            pendingLecture=null;
+        }
+    });
+
+    const json={
+        subject:document.getElementById("subject").value || "",
+        chapters
+    };
+
+    document.getElementById("output").textContent =
+        JSON.stringify(json,null,2);
+}
+
+/* 📂 File Loader */
+function loadFile(input){
+    const file=input.files[0];
+    if(!file) return;
+    const r=new FileReader();
+    r.onload=e=>document.getElementById("input").value=e.target.result;
+    r.readAsText(file);
+}
+</script>
+</body>
+</html>
