@@ -1,8 +1,8 @@
 {
-  "routes": [
-    { "src": "/", "dest": "/index.html" },
-    { "src": "/decoder", "dest": "/decoder.html" },
-    { "src": "/download", "dest": "/download.html" },
-    { "src": "/decoder2", "dest": "/decoder2.html" }
-  ]
+  "functions": {
+    "api/scrape.js": {
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  }
 }
