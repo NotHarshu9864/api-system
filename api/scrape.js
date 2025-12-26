@@ -1,16 +1,19 @@
-import { chromium } from "playwright-core";
+import chromium from "@sparticuz/chromium";
+import puppeteer from "puppeteer-core";
 
 export default async function handler(req, res) {
   try {
-    const browser = await chromium.launch({
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      headless: true
+    const browser = await puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless
     });
 
     const page = await browser.newPage();
 
     await page.goto("https://e-leak.vercel.app/nexttoppers", {
-      waitUntil: "networkidle"
+      waitUntil: "networkidle2"
     });
 
     await page.waitForTimeout(3000);
@@ -18,30 +21,29 @@ export default async function handler(req, res) {
     const data = await page.evaluate(() => {
       const batches = [];
 
-      document.querySelectorAll("section").forEach((batchEl) => {
+      document.querySelectorAll("section").forEach(batchEl => {
         const batchName =
-          batchEl.querySelector("h1, h2, h3")?.innerText?.trim() ||
+          batchEl.querySelector("h1,h2,h3")?.innerText?.trim() ||
           "Unknown Batch";
 
         const subjects = [];
 
-        batchEl.querySelectorAll("div").forEach((subjectEl) => {
+        batchEl.querySelectorAll("div").forEach(subjectEl => {
           const subjectName =
-            subjectEl.querySelector("h2, h3, h4")?.innerText?.trim();
+            subjectEl.querySelector("h2,h3,h4")?.innerText?.trim();
 
           if (!subjectName) return;
 
-          let lectureCount = 1;
+          let count = 1;
           const lectures = [];
 
-          subjectEl.querySelectorAll("a").forEach((a) => {
+          subjectEl.querySelectorAll("a").forEach(a => {
             const url = a.href;
-
             if (!url) return;
 
             if (url.includes("youtu") || url.includes("video")) {
               lectures.push({
-                title: `Lecture ${lectureCount++}`,
+                title: `Lecture ${count++}`,
                 play: url,
                 notes: ""
               });
@@ -53,7 +55,7 @@ export default async function handler(req, res) {
             }
           });
 
-          if (lectures.length > 0) {
+          if (lectures.length) {
             subjects.push({
               title: subjectName,
               lectures
@@ -61,7 +63,7 @@ export default async function handler(req, res) {
           }
         });
 
-        if (subjects.length > 0) {
+        if (subjects.length) {
           batches.push({
             batch: batchName,
             subjects
@@ -79,10 +81,11 @@ export default async function handler(req, res) {
       generatedAt: new Date().toISOString(),
       data
     });
-  } catch (err) {
+
+  } catch (error) {
     res.status(500).json({
       success: false,
-      error: err.message
+      error: error.message
     });
   }
 }
