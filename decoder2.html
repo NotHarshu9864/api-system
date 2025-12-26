@@ -2,186 +2,133 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lecture JSON Generator</title>
-  <style>
-    :root {
-      --cyan: #00bcd4;
-      --white: #ffffff;
-      --bg: #f7feff;
-      --border: #cceff5;
-    }
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
-      color: #033;
-    }
-    .container {
-      max-width: 900px;
-      margin: 30px auto;
-      background: var(--white);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-      border: 2px solid var(--border);
-    }
-    h1 {
-      text-align: center;
-      color: var(--cyan);
-      margin-bottom: 20px;
-    }
-    label {
-      font-weight: bold;
-      margin-top: 10px;
-      display: block;
-    }
-    input[type="text"], input[type="file"] {
-      width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      border-radius: 8px;
-      border: 2px solid var(--border);
-      outline: none;
-    }
-    button {
-      margin-top: 15px;
-      background: var(--cyan);
-      color: white;
-      border: none;
-      padding: 12px 18px;
-      border-radius: 8px;
-      font-size: 15px;
-      cursor: pointer;
-    }
-    button:hover {
-      opacity: 0.9;
-    }
-    pre {
-      margin-top: 20px;
-      background: #022;
-      color: #dff;
-      padding: 15px;
-      border-radius: 10px;
-      max-height: 400px;
-      overflow: auto;
-      font-size: 13px;
-    }
-    .actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-  </style>
+  <title>Har$H Lecture JSON Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <div class="container">
-    <h1>Lecture URL → JSON Converter</h1><label>Subject Name</label>
-<input type="text" id="subjectName" placeholder="Enter subject name" />
+<body class="bg-cyan-50 min-h-screen">  <!-- Header -->  <header class="bg-cyan-500 text-white py-4 shadow">
+    <h1 class="text-center text-2xl font-bold tracking-wide">Har$H</h1>
+  </header>  <!-- Main Card -->  <main class="p-4">
+    <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-5 space-y-4">
+      <h2 class="text-xl font-semibold text-cyan-600 text-center">Lecture URL → JSON Converter</h2><!-- Subject -->
+  <div>
+    <label class="block text-sm font-semibold mb-1">Subject Name</label>
+    <input id="subjectName" type="text" placeholder="Enter subject name"
+      class="w-full border border-cyan-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+  </div>
 
-<label>Upload Subject File (.txt)</label>
-<input type="file" id="fileInput" accept=".txt" />
+  <!-- File Upload -->
+  <div>
+    <label class="block text-sm font-semibold mb-1">Upload Subject File (.txt)</label>
+    <input id="fileInput" type="file" accept=".txt"
+      class="w-full border border-cyan-200 rounded-lg px-3 py-2 bg-white" />
+  </div>
 
-<div class="actions">
-  <button onclick="processFile()">Generate JSON</button>
-  <button onclick="copyJSON()">Copy JSON</button>
+  <!-- Buttons -->
+  <div class="flex gap-3 flex-wrap justify-center">
+    <button onclick="processFile()"
+      class="bg-cyan-500 text-white px-5 py-2 rounded-lg font-semibold hover:bg-cyan-600">Generate JSON</button>
+    <button onclick="copyJSON()"
+      class="bg-cyan-100 text-cyan-700 px-5 py-2 rounded-lg font-semibold hover:bg-cyan-200">Copy JSON</button>
+  </div>
+
+  <!-- Output -->
+  <pre id="output" class="bg-slate-900 text-cyan-200 text-xs p-4 rounded-xl overflow-auto max-h-[400px]">JSON preview will appear here...</pre>
 </div>
 
-<pre id="output">JSON preview will appear here...</pre>
+  </main><script>
+  function extractDecodedUrls(rawUrl) {
+    // Find encoded URL part (after last /)
+    const parts = rawUrl.split('/');
+    const lastPart = parts[parts.length - 1];
 
-  </div>  <script>
-    function decodePlayURL(url) {
-      // Remove player prefix
-      const prefix = 'https://e-leak.vercel.app/play/live/';
-      if (!url.startsWith(prefix)) return url;
+    let decodedMain = rawUrl;
+    let notes = '';
 
-      const encodedPart = url.replace(prefix, '');
-      const parts = encodedPart.split('?');
+    try {
+      const urlObj = new URL(rawUrl);
+      const base = decodeURIComponent(urlObj.pathname.split('/').pop());
 
-      const decodedMain = decodeURIComponent(parts[0]);
-
-      if (parts.length === 1) {
-        return decodedMain;
+      if (base.startsWith('http')) {
+        decodedMain = base;
       }
 
-      // Decode query params like noteslink
-      const params = new URLSearchParams(parts[1]);
-      let notes = '';
-      if (params.has('noteslink')) {
-        notes = decodeURIComponent(params.get('noteslink'));
-      }
-
-      return { play: decodedMain, notes };
-    }
-
-    function processFile() {
-      const fileInput = document.getElementById('fileInput');
-      const subjectName = document.getElementById('subjectName').value.trim();
-      const output = document.getElementById('output');
-
-      if (!subjectName) {
-        alert('Please enter subject name');
-        return;
-      }
-      if (!fileInput.files.length) {
-        alert('Please upload a file');
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        const lines = reader.result.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-
-        const chapters = [];
-        let chapterIndex = 1;
-        let lectureIndex = 1;
-
-        for (let i = 0; i < lines.length; i += 2) {
-          const title = lines[i];
-          const rawUrl = lines[i + 1];
-
-          let play = '';
-          let notes = '';
-
-          const decoded = decodePlayURL(rawUrl);
-          if (typeof decoded === 'string') {
-            play = decoded;
-          } else {
-            play = decoded.play;
-            notes = decoded.notes || '';
-          }
-
-          chapters.push({
-            id: 'ch' + chapterIndex,
-            title: title,
-            videos: [
-              {
-                id: 'lec' + lectureIndex,
-                title: title,
-                play: play,
-                notes: notes
-              }
-            ]
-          });
-
-          chapterIndex++;
-          lectureIndex++;
+      for (const [key, value] of urlObj.searchParams.entries()) {
+        if (value && value.startsWith('http')) {
+          notes = decodeURIComponent(value);
         }
-
-        const finalJSON = {
-          subject: subjectName,
-          chapters: chapters
-        };
-
-        output.textContent = JSON.stringify(finalJSON, null, 2);
-      };
-      reader.readAsText(fileInput.files[0]);
+      }
+    } catch (e) {
+      decodedMain = decodeURIComponent(rawUrl);
     }
 
-    function copyJSON() {
-      const text = document.getElementById('output').textContent;
-      if (!text || text.startsWith('JSON preview')) return;
-      navigator.clipboard.writeText(text);
-      alert('JSON copied to clipboard');
+    // If still contains encoded https
+    if (decodedMain.includes('http%')) {
+      decodedMain = decodeURIComponent(decodedMain.substring(decodedMain.indexOf('http%')));
     }
-  </script></body>
-</html>
+
+    return { play: decodedMain, notes };
+  }
+
+  function processFile() {
+    const subject = document.getElementById('subjectName').value.trim();
+    const file = document.getElementById('fileInput').files[0];
+    const output = document.getElementById('output');
+
+    if (!subject) return alert('Enter subject name');
+    if (!file) return alert('Upload file');
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const lines = reader.result.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+
+      const chapters = [];
+      let currentChapter = null;
+      let chapterIndex = 0;
+
+      lines.forEach(line => {
+        if (!line.startsWith('http')) {
+          // New chapter
+          chapterIndex++;
+          currentChapter = {
+            id: 'ch' + chapterIndex,
+            title: line,
+            videos: []
+          };
+          chapters.push(currentChapter);
+        } else if (currentChapter) {
+          const lecNumber = currentChapter.videos.length + 1;
+          const decoded = extractDecodedUrls(line);
+
+          currentChapter.videos.push({
+            id: 'lec' + lecNumber,
+            title: 'Lecture ' + lecNumber,
+            play: decoded.play,
+            notes: decoded.notes || ''
+          });
+        }
+      });
+
+      const finalJSON = { subject, chapters };
+      output.textContent = JSON.stringify(finalJSON, null, 2);
+    };
+
+    reader.readAsText(file);
+  }
+
+  function copyJSON() {
+    const text = document.getElementById('output').textContent;
+    if (!text || text.startsWith('JSON preview')) return;
+    navigator.clipboard.writeText(text);
+    alert('JSON copied');
+  }
+</script></body>
+</html><!-- ================= VERCEL DEPLOY FILE =================
+Create a file named vercel.json in the same directory
+----------------------------------------------------------
+{
+  "version": 2,
+  "routes": [
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
+======================================================== -->
