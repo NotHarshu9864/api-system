@@ -1,13 +1,15 @@
-import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
 
 export default async function handler(req, res) {
   try {
+    const executablePath = await chromium.executablePath();
+
     const browser = await puppeteer.launch({
       args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
-      headless: chromium.headless
+      executablePath,
+      headless: chromium.headless,
+      defaultViewport: chromium.defaultViewport
     });
 
     const page = await browser.newPage();
@@ -16,7 +18,7 @@ export default async function handler(req, res) {
       waitUntil: "networkidle2"
     });
 
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(4000);
 
     const data = await page.evaluate(() => {
       const batches = [];
@@ -31,10 +33,9 @@ export default async function handler(req, res) {
         batchEl.querySelectorAll("div").forEach(subjectEl => {
           const subjectName =
             subjectEl.querySelector("h2,h3,h4")?.innerText?.trim();
-
           if (!subjectName) return;
 
-          let count = 1;
+          let lec = 1;
           const lectures = [];
 
           subjectEl.querySelectorAll("a").forEach(a => {
@@ -43,7 +44,7 @@ export default async function handler(req, res) {
 
             if (url.includes("youtu") || url.includes("video")) {
               lectures.push({
-                title: `Lecture ${count++}`,
+                title: `Lecture ${lec++}`,
                 play: url,
                 notes: ""
               });
