@@ -3,6 +3,6 @@
     { "src": "/", "dest": "/index.html" },
     { "src": "/decoder", "dest": "/decoder.html" },
     { "src": "/download", "dest": "/download.html" },
-    { "src": "/pdf", "dest": "/pdf.html" }
+    { "src": "/decoder2", "dest": "/decoder2.html" }
   ]
 }
