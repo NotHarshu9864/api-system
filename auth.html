@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Face Authentication</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- face-api -->
+  <script defer src="https://unpkg.com/face-api.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    video {
+      width: 100%;
+      max-width: 360px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      background: black;
+    }
+    button {
+      padding: 10px 16px;
+      margin: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #status {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Face Authentication</h2>
+
+  <video id="video" autoplay muted></video>
+
+  <div>
+    <button id="registerBtn">Register Face</button>
+    <button id="loginBtn">Login</button>
+  </div>
+
+  <div id="status">Loading models...</div>
+
+  <!-- MAIN LOGIC -->
+  <script type="module">
+    import { startCamera } from "./authentication/core/camera.js";
+    import { loadModels } from "./authentication/core/js/faceEngine.js";
+    import { register, authenticate } from "./authentication/core/js/auth.js";
+
+    const video = document.getElementById("video");
+    const statusEl = document.getElementById("status");
+
+    async function init() {
+      try {
+        await loadModels();
+        await startCamera(video);
+        statusEl.textContent = "Ready";
+      } catch (err) {
+        statusEl.textContent = err.message;
+        console.error(err);
+      }
+    }
+
+    document.getElementById("registerBtn").onclick = async () => {
+      statusEl.textContent = "Registering...";
+      try {
+        await register(video);
+        statusEl.textContent = "Face registered successfully";
+      } catch (err) {
+        statusEl.textContent = err.message;
+      }
+    };
+
+    document.getElementById("loginBtn").onclick = async () => {
+      statusEl.textContent = "Authenticating...";
+      try {
+        const success = await authenticate(video);
+        statusEl.textContent = success
+          ? "✅ Authentication successful"
+          : "❌ Face not matched";
+      } catch (err) {
+        statusEl.textContent = err.message;
+      }
+    };
+
+    init();
+  </script>
+</body>
+</html>
